@@ -1,0 +1,121 @@
+﻿caso_id,operacion_id,tipo_prueba,regla_a_verificar,resultado_alumno,instrucciones
+PET-T001,PET-O001,validar_operacion,validar cliente activo AND detalle no vacio AND autorizacion,PENDIENTE,Verificar precondiciones en dominio
+PET-B001,PET-O001,evaluar_beneficio,VIP AND total >=1500 AND NOT promocion,PENDIENTE,Composicion Specification AND/NOT
+PET-T002,PET-O002,validar_operacion,validar cliente activo AND detalle no vacio AND autorizacion,PENDIENTE,Verificar precondiciones en dominio
+PET-B002,PET-O002,evaluar_beneficio,VIP AND total >=1500 AND NOT promocion,PENDIENTE,Composicion Specification AND/NOT
+PET-T003,PET-O003,validar_operacion,validar cliente activo AND detalle no vacio AND autorizacion,PENDIENTE,Verificar precondiciones en dominio
+PET-B003,PET-O003,evaluar_beneficio,VIP AND total >=1500 AND NOT promocion,PENDIENTE,Composicion Specification AND/NOT
+PET-T004,PET-O004,validar_operacion,validar cliente activo AND detalle no vacio AND autorizacion,PENDIENTE,Verificar precondiciones en dominio
+PET-B004,PET-O004,evaluar_beneficio,VIP AND total >=1500 AND NOT promocion,PENDIENTE,Composicion Specification AND/NOT
+PET-T005,PET-O005,validar_operacion,validar cliente activo AND detalle no vacio AND autorizacion,PENDIENTE,Verificar precondiciones en dominio
+PET-B005,PET-O005,evaluar_beneficio,VIP AND total >=1500 AND NOT promocion,PENDIENTE,Composicion Specification AND/NOT
+PET-T006,PET-O006,validar_operacion,validar cliente activo AND detalle no vacio AND autorizacion,PENDIENTE,Verificar precondiciones en dominio
+PET-B006,PET-O006,evaluar_beneficio,VIP AND total >=1500 AND NOT promocion,PENDIENTE,Composicion Specification AND/NOT
+PET-T007,PET-O007,validar_operacion,validar cliente activo AND detalle no vacio AND autorizacion,PENDIENTE,Verificar precondiciones en dominio
+PET-B007,PET-O007,evaluar_beneficio,VIP AND total >=1500 AND NOT promocion,PENDIENTE,Composicion Specification AND/NOT
+PET-T008,PET-O008,validar_operacion,validar cliente activo AND detalle no vacio AND autorizacion,PENDIENTE,Verificar precondiciones en dominio
+PET-B008,PET-O008,evaluar_beneficio,VIP AND total >=1500 AND NOT promocion,PENDIENTE,Composicion Specification AND/NOT
+PET-T009,PET-O009,validar_operacion,validar cliente activo AND detalle no vacio AND autorizacion,PENDIENTE,Verificar precondiciones en dominio
+PET-B009,PET-O009,evaluar_beneficio,VIP AND total >=1500 AND NOT promocion,PENDIENTE,Composicion Specification AND/NOT
+PET-T010,PET-O010,validar_operacion,validar cliente activo AND detalle no vacio AND autorizacion,PENDIENTE,Verificar precondiciones en dominio
+PET-B010,PET-O010,evaluar_beneficio,VIP AND total >=1500 AND NOT promocion,PENDIENTE,Composicion Specification AND/NOT
+PET-T011,PET-O011,validar_operacion,validar cliente activo AND detalle no vacio AND autorizacion,PENDIENTE,Verificar precondiciones en dominio
+PET-B011,PET-O011,evaluar_beneficio,VIP AND total >=1500 AND NOT promocion,PENDIENTE,Composicion Specification AND/NOT
+PET-T012,PET-O012,validar_operacion,validar cliente activo AND detalle no vacio AND autorizacion,PENDIENTE,Verificar precondiciones en dominio
+PET-B012,PET-O012,evaluar_beneficio,VIP AND total >=1500 AND NOT promocion,PENDIENTE,Composicion Specification AND/NOT
+PET-T013,PET-O013,validar_operacion,validar cliente activo AND detalle no vacio AND autorizacion,PENDIENTE,Verificar precondiciones en dominio
+PET-B013,PET-O013,evaluar_beneficio,VIP AND total >=1500 AND NOT promocion,PENDIENTE,Composicion Specification AND/NOT
+PET-T014,PET-O014,validar_operacion,validar cliente activo AND detalle no vacio AND autorizacion,PENDIENTE,Verificar precondiciones en dominio
+PET-B014,PET-O014,evaluar_beneficio,VIP AND total >=1500 AND NOT promocion,PENDIENTE,Composicion Specification AND/NOT
+PET-T015,PET-O015,validar_operacion,validar cliente activo AND detalle no vacio AND autorizacion,PENDIENTE,Verificar precondiciones en dominio
+PET-B015,PET-O015,evaluar_beneficio,VIP AND total >=1500 AND NOT promocion,PENDIENTE,Composicion Specification AND/NOT
+PET-T016,PET-O016,validar_operacion,validar cliente activo AND detalle no vacio AND autorizacion,PENDIENTE,Verificar precondiciones en dominio
+PET-B016,PET-O016,evaluar_beneficio,VIP AND total >=1500 AND NOT promocion,PENDIENTE,Composicion Specification AND/NOT
+PET-T017,PET-O017,validar_operacion,validar cliente activo AND detalle no vacio AND autorizacion,PENDIENTE,Verificar precondiciones en dominio
+PET-B017,PET-O017,evaluar_beneficio,VIP AND total >=1500 AND NOT promocion,PENDIENTE,Composicion Specification AND/NOT
+PET-T018,PET-O018,validar_operacion,validar cliente activo AND detalle no vacio AND autorizacion,PENDIENTE,Verificar precondiciones en dominio
+PET-B018,PET-O018,evaluar_beneficio,VIP AND total >=1500 AND NOT promocion,PENDIENTE,Composicion Specification AND/NOT
+PET-T019,PET-O019,validar_operacion,validar cliente activo AND detalle no vacio AND autorizacion,PENDIENTE,Verificar precondiciones en dominio
+PET-B019,PET-O019,evaluar_beneficio,VIP AND total >=1500 AND NOT promocion,PENDIENTE,Composicion Specification AND/NOT
+PET-T020,PET-O020,validar_operacion,validar cliente activo AND detalle no vacio AND autorizacion,PENDIENTE,Verificar precondiciones en dominio
+PET-B020,PET-O020,evaluar_beneficio,VIP AND total >=1500 AND NOT promocion,PENDIENTE,Composicion Specification AND/NOT
+PET-T021,PET-O021,validar_operacion,validar cliente activo AND detalle no vacio AND autorizacion,PENDIENTE,Verificar precondiciones en dominio
+PET-B021,PET-O021,evaluar_beneficio,VIP AND total >=1500 AND NOT promocion,PENDIENTE,Composicion Specification AND/NOT
+PET-T022,PET-O022,validar_operacion,validar cliente activo AND detalle no vacio AND autorizacion,PENDIENTE,Verificar precondiciones en dominio
+PET-B022,PET-O022,evaluar_beneficio,VIP AND total >=1500 AND NOT promocion,PENDIENTE,Composicion Specification AND/NOT
+PET-T023,PET-O023,validar_operacion,validar cliente activo AND detalle no vacio AND autorizacion,PENDIENTE,Verificar precondiciones en dominio
+PET-B023,PET-O023,evaluar_beneficio,VIP AND total >=1500 AND NOT promocion,PENDIENTE,Composicion Specification AND/NOT
+PET-T024,PET-O024,validar_operacion,validar cliente activo AND detalle no vacio AND autorizacion,PENDIENTE,Verificar precondiciones en dominio
+PET-B024,PET-O024,evaluar_beneficio,VIP AND total >=1500 AND NOT promocion,PENDIENTE,Composicion Specification AND/NOT
+PET-T025,PET-O025,validar_operacion,validar cliente activo AND detalle no vacio AND autorizacion,PENDIENTE,Verificar precondiciones en dominio
+PET-B025,PET-O025,evaluar_beneficio,VIP AND total >=1500 AND NOT promocion,PENDIENTE,Composicion Specification AND/NOT
+PET-T026,PET-O026,validar_operacion,validar cliente activo AND detalle no vacio AND autorizacion,PENDIENTE,Verificar precondiciones en dominio
+PET-B026,PET-O026,evaluar_beneficio,VIP AND total >=1500 AND NOT promocion,PENDIENTE,Composicion Specification AND/NOT
+PET-T027,PET-O027,validar_operacion,validar cliente activo AND detalle no vacio AND autorizacion,PENDIENTE,Verificar precondiciones en dominio
+PET-B027,PET-O027,evaluar_beneficio,VIP AND total >=1500 AND NOT promocion,PENDIENTE,Composicion Specification AND/NOT
+PET-T028,PET-O028,validar_operacion,validar cliente activo AND detalle no vacio AND autorizacion,PENDIENTE,Verificar precondiciones en dominio
+PET-B028,PET-O028,evaluar_beneficio,VIP AND total >=1500 AND NOT promocion,PENDIENTE,Composicion Specification AND/NOT
+PET-T029,PET-O029,validar_operacion,validar cliente activo AND detalle no vacio AND autorizacion,PENDIENTE,Verificar precondiciones en dominio
+PET-B029,PET-O029,evaluar_beneficio,VIP AND total >=1500 AND NOT promocion,PENDIENTE,Composicion Specification AND/NOT
+PET-T030,PET-O030,validar_operacion,validar cliente activo AND detalle no vacio AND autorizacion,PENDIENTE,Verificar precondiciones en dominio
+PET-B030,PET-O030,evaluar_beneficio,VIP AND total >=1500 AND NOT promocion,PENDIENTE,Composicion Specification AND/NOT
+PET-T031,PET-O031,validar_operacion,validar cliente activo AND detalle no vacio AND autorizacion,PENDIENTE,Verificar precondiciones en dominio
+PET-B031,PET-O031,evaluar_beneficio,VIP AND total >=1500 AND NOT promocion,PENDIENTE,Composicion Specification AND/NOT
+PET-T032,PET-O032,validar_operacion,validar cliente activo AND detalle no vacio AND autorizacion,PENDIENTE,Verificar precondiciones en dominio
+PET-B032,PET-O032,evaluar_beneficio,VIP AND total >=1500 AND NOT promocion,PENDIENTE,Composicion Specification AND/NOT
+PET-T033,PET-O033,validar_operacion,validar cliente activo AND detalle no vacio AND autorizacion,PENDIENTE,Verificar precondiciones en dominio
+PET-B033,PET-O033,evaluar_beneficio,VIP AND total >=1500 AND NOT promocion,PENDIENTE,Composicion Specification AND/NOT
+PET-T034,PET-O034,validar_operacion,validar cliente activo AND detalle no vacio AND autorizacion,PENDIENTE,Verificar precondiciones en dominio
+PET-B034,PET-O034,evaluar_beneficio,VIP AND total >=1500 AND NOT promocion,PENDIENTE,Composicion Specification AND/NOT
+PET-T035,PET-O035,validar_operacion,validar cliente activo AND detalle no vacio AND autorizacion,PENDIENTE,Verificar precondiciones en dominio
+PET-B035,PET-O035,evaluar_beneficio,VIP AND total >=1500 AND NOT promocion,PENDIENTE,Composicion Specification AND/NOT
+PET-T036,PET-O036,validar_operacion,validar cliente activo AND detalle no vacio AND autorizacion,PENDIENTE,Verificar precondiciones en dominio
+PET-B036,PET-O036,evaluar_beneficio,VIP AND total >=1500 AND NOT promocion,PENDIENTE,Composicion Specification AND/NOT
+PET-T037,PET-O037,validar_operacion,validar cliente activo AND detalle no vacio AND autorizacion,PENDIENTE,Verificar precondiciones en dominio
+PET-B037,PET-O037,evaluar_beneficio,VIP AND total >=1500 AND NOT promocion,PENDIENTE,Composicion Specification AND/NOT
+PET-T038,PET-O038,validar_operacion,validar cliente activo AND detalle no vacio AND autorizacion,PENDIENTE,Verificar precondiciones en dominio
+PET-B038,PET-O038,evaluar_beneficio,VIP AND total >=1500 AND NOT promocion,PENDIENTE,Composicion Specification AND/NOT
+PET-T039,PET-O039,validar_operacion,validar cliente activo AND detalle no vacio AND autorizacion,PENDIENTE,Verificar precondiciones en dominio
+PET-B039,PET-O039,evaluar_beneficio,VIP AND total >=1500 AND NOT promocion,PENDIENTE,Composicion Specification AND/NOT
+PET-T040,PET-O040,validar_operacion,validar cliente activo AND detalle no vacio AND autorizacion,PENDIENTE,Verificar precondiciones en dominio
+PET-B040,PET-O040,evaluar_beneficio,VIP AND total >=1500 AND NOT promocion,PENDIENTE,Composicion Specification AND/NOT
+PET-T041,PET-O041,validar_operacion,validar cliente activo AND detalle no vacio AND autorizacion,PENDIENTE,Verificar precondiciones en dominio
+PET-B041,PET-O041,evaluar_beneficio,VIP AND total >=1500 AND NOT promocion,PENDIENTE,Composicion Specification AND/NOT
+PET-T042,PET-O042,validar_operacion,validar cliente activo AND detalle no vacio AND autorizacion,PENDIENTE,Verificar precondiciones en dominio
+PET-B042,PET-O042,evaluar_beneficio,VIP AND total >=1500 AND NOT promocion,PENDIENTE,Composicion Specification AND/NOT
+PET-T043,PET-O043,validar_operacion,validar cliente activo AND detalle no vacio AND autorizacion,PENDIENTE,Verificar precondiciones en dominio
+PET-B043,PET-O043,evaluar_beneficio,VIP AND total >=1500 AND NOT promocion,PENDIENTE,Composicion Specification AND/NOT
+PET-T044,PET-O044,validar_operacion,validar cliente activo AND detalle no vacio AND autorizacion,PENDIENTE,Verificar precondiciones en dominio
+PET-B044,PET-O044,evaluar_beneficio,VIP AND total >=1500 AND NOT promocion,PENDIENTE,Composicion Specification AND/NOT
+PET-T045,PET-O045,validar_operacion,validar cliente activo AND detalle no vacio AND autorizacion,PENDIENTE,Verificar precondiciones en dominio
+PET-B045,PET-O045,evaluar_beneficio,VIP AND total >=1500 AND NOT promocion,PENDIENTE,Composicion Specification AND/NOT
+PET-T046,PET-O046,validar_operacion,validar cliente activo AND detalle no vacio AND autorizacion,PENDIENTE,Verificar precondiciones en dominio
+PET-B046,PET-O046,evaluar_beneficio,VIP AND total >=1500 AND NOT promocion,PENDIENTE,Composicion Specification AND/NOT
+PET-T047,PET-O047,validar_operacion,validar cliente activo AND detalle no vacio AND autorizacion,PENDIENTE,Verificar precondiciones en dominio
+PET-B047,PET-O047,evaluar_beneficio,VIP AND total >=1500 AND NOT promocion,PENDIENTE,Composicion Specification AND/NOT
+PET-T048,PET-O048,validar_operacion,validar cliente activo AND detalle no vacio AND autorizacion,PENDIENTE,Verificar precondiciones en dominio
+PET-B048,PET-O048,evaluar_beneficio,VIP AND total >=1500 AND NOT promocion,PENDIENTE,Composicion Specification AND/NOT
+PET-T049,PET-O049,validar_operacion,validar cliente activo AND detalle no vacio AND autorizacion,PENDIENTE,Verificar precondiciones en dominio
+PET-B049,PET-O049,evaluar_beneficio,VIP AND total >=1500 AND NOT promocion,PENDIENTE,Composicion Specification AND/NOT
+PET-T050,PET-O050,validar_operacion,validar cliente activo AND detalle no vacio AND autorizacion,PENDIENTE,Verificar precondiciones en dominio
+PET-B050,PET-O050,evaluar_beneficio,VIP AND total >=1500 AND NOT promocion,PENDIENTE,Composicion Specification AND/NOT
+PET-T051,PET-O051,validar_operacion,validar cliente activo AND detalle no vacio AND autorizacion,PENDIENTE,Verificar precondiciones en dominio
+PET-B051,PET-O051,evaluar_beneficio,VIP AND total >=1500 AND NOT promocion,PENDIENTE,Composicion Specification AND/NOT
+PET-T052,PET-O052,validar_operacion,validar cliente activo AND detalle no vacio AND autorizacion,PENDIENTE,Verificar precondiciones en dominio
+PET-B052,PET-O052,evaluar_beneficio,VIP AND total >=1500 AND NOT promocion,PENDIENTE,Composicion Specification AND/NOT
+PET-T053,PET-O053,validar_operacion,validar cliente activo AND detalle no vacio AND autorizacion,PENDIENTE,Verificar precondiciones en dominio
+PET-B053,PET-O053,evaluar_beneficio,VIP AND total >=1500 AND NOT promocion,PENDIENTE,Composicion Specification AND/NOT
+PET-T054,PET-O054,validar_operacion,validar cliente activo AND detalle no vacio AND autorizacion,PENDIENTE,Verificar precondiciones en dominio
+PET-B054,PET-O054,evaluar_beneficio,VIP AND total >=1500 AND NOT promocion,PENDIENTE,Composicion Specification AND/NOT
+PET-T055,PET-O055,validar_operacion,validar cliente activo AND detalle no vacio AND autorizacion,PENDIENTE,Verificar precondiciones en dominio
+PET-B055,PET-O055,evaluar_beneficio,VIP AND total >=1500 AND NOT promocion,PENDIENTE,Composicion Specification AND/NOT
+PET-T056,PET-O056,validar_operacion,validar cliente activo AND detalle no vacio AND autorizacion,PENDIENTE,Verificar precondiciones en dominio
+PET-B056,PET-O056,evaluar_beneficio,VIP AND total >=1500 AND NOT promocion,PENDIENTE,Composicion Specification AND/NOT
+PET-T057,PET-O057,validar_operacion,validar cliente activo AND detalle no vacio AND autorizacion,PENDIENTE,Verificar precondiciones en dominio
+PET-B057,PET-O057,evaluar_beneficio,VIP AND total >=1500 AND NOT promocion,PENDIENTE,Composicion Specification AND/NOT
+PET-T058,PET-O058,validar_operacion,validar cliente activo AND detalle no vacio AND autorizacion,PENDIENTE,Verificar precondiciones en dominio
+PET-B058,PET-O058,evaluar_beneficio,VIP AND total >=1500 AND NOT promocion,PENDIENTE,Composicion Specification AND/NOT
+PET-T059,PET-O059,validar_operacion,validar cliente activo AND detalle no vacio AND autorizacion,PENDIENTE,Verificar precondiciones en dominio
+PET-B059,PET-O059,evaluar_beneficio,VIP AND total >=1500 AND NOT promocion,PENDIENTE,Composicion Specification AND/NOT
+PET-T060,PET-O060,validar_operacion,validar cliente activo AND detalle no vacio AND autorizacion,PENDIENTE,Verificar precondiciones en dominio
+PET-B060,PET-O060,evaluar_beneficio,VIP AND total >=1500 AND NOT promocion,PENDIENTE,Composicion Specification AND/NOT

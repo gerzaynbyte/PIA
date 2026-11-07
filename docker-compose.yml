@@ -1,0 +1,77 @@
+name: petmarket
+
+services:
+  # ---------- BASE DE DATOS ----------
+  mysql_db:
+    image: mysql:8.0
+    container_name: petmarket_mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD:?Falta DB_PASSWORD}
+      MYSQL_DATABASE: ${DB_NAME:?Falta DB_NAME}
+    ports:
+      - "${DB_PORT:-3306}:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-p$$MYSQL_ROOT_PASSWORD"]
+      interval: 5s
+      timeout: 3s
+      retries: 12
+      start_period: 15s
+
+  # ---------- APLICACIÓN (API REST) ----------
+  api:
+    build: .
+    container_name: petmarket_api
+    restart: unless-stopped
+    command: uvicorn src.main:app --host 0.0.0.0 --port ${PORT:-3000}
+    ports:
+      - "${PORT:-3000}:${PORT:-3000}"
+    environment:
+      APP_ENV: ${APP_ENV:-production}
+      DB_HOST: mysql_db
+      DB_PORT: "3306"
+      DB_USER: ${DB_USER:-root}
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_NAME: ${DB_NAME}
+      JWT_SECRET: ${JWT_SECRET}
+    depends_on:
+      mysql_db:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "python", "-c",
+             "import urllib.request;urllib.request.urlopen('http://localhost:${PORT:-3000}/health', timeout=2)"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # ---------- TESTS (unitarios + integración + runner CSV) ----------
+  tests:
+    build: .
+    container_name: petmarket_tests
+    profiles: ["tests"]        # no arranca con `up` normal (evita reproducir la API en cada demo)
+    command: >
+      bash -c "
+        python tools/wait_for_db.py &&
+        python -m tools.ejecutar_casos data/ resultados/ &&
+        pytest tests/ --cov=src --cov-report=term-missing
+                      --cov-report=xml:cov/coverage.xml
+                      --cov-fail-under=80
+        "
+    environment:
+      APP_ENV: test
+      DB_HOST: mysql_db
+      DB_PORT: "3306"
+      DB_USER: ${DB_USER:-root}
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_NAME: ${DB_NAME}_test
+    volumes:
+      - ./resultados:/app/resultados   # evidencia PET-T/PET-B/PET-S para el docente
+      - ./cov:/app/cov
+    depends_on:
+      mysql_db:
+        condition: service_healthy
+
+volumes:
+  mysql_data:

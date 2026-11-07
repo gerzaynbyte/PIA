@@ -1,0 +1,121 @@
+caso_id,operacion_id,regla,resultado,evidencia
+PET-T001,PET-O001,validar cliente activo AND detalle no vacio AND autorizacion,FALLIDO,total=9036.00 autorizado=True activo=False lineas=2
+PET-B001,PET-O001,VIP AND total >=1500 AND NOT promocion,FALLIDO,total=9036.00 autorizado=True activo=False lineas=2
+PET-T002,PET-O002,validar cliente activo AND detalle no vacio AND autorizacion,FALLIDO,total=8042.00 autorizado=True activo=False lineas=3
+PET-B002,PET-O002,VIP AND total >=1500 AND NOT promocion,FALLIDO,total=8042.00 autorizado=True activo=False lineas=3
+PET-T003,PET-O003,validar cliente activo AND detalle no vacio AND autorizacion,FALLIDO,total=1514.00 autorizado=True activo=False lineas=1
+PET-B003,PET-O003,VIP AND total >=1500 AND NOT promocion,EXITOSO,total=1514.00 autorizado=True activo=False lineas=1
+PET-T004,PET-O004,validar cliente activo AND detalle no vacio AND autorizacion,EXITOSO,total=5440.00 autorizado=True activo=True lineas=2
+PET-B004,PET-O004,VIP AND total >=1500 AND NOT promocion,FALLIDO,total=5440.00 autorizado=True activo=True lineas=2
+PET-T005,PET-O005,validar cliente activo AND detalle no vacio AND autorizacion,EXITOSO,total=6290.00 autorizado=True activo=True lineas=3
+PET-B005,PET-O005,VIP AND total >=1500 AND NOT promocion,FALLIDO,total=6290.00 autorizado=True activo=True lineas=3
+PET-T006,PET-O006,validar cliente activo AND detalle no vacio AND autorizacion,EXITOSO,total=2932.00 autorizado=True activo=True lineas=1
+PET-B006,PET-O006,VIP AND total >=1500 AND NOT promocion,FALLIDO,total=2932.00 autorizado=True activo=True lineas=1
+PET-T007,PET-O007,validar cliente activo AND detalle no vacio AND autorizacion,EXITOSO,total=3548.00 autorizado=True activo=True lineas=2
+PET-B007,PET-O007,VIP AND total >=1500 AND NOT promocion,FALLIDO,total=3548.00 autorizado=True activo=True lineas=2
+PET-T008,PET-O008,validar cliente activo AND detalle no vacio AND autorizacion,FALLIDO,total=14336.00 autorizado=False activo=True lineas=3
+PET-B008,PET-O008,VIP AND total >=1500 AND NOT promocion,EXITOSO,total=14336.00 autorizado=False activo=True lineas=3
+PET-T009,PET-O009,validar cliente activo AND detalle no vacio AND autorizacion,EXITOSO,total=4116.00 autorizado=True activo=True lineas=1
+PET-B009,PET-O009,VIP AND total >=1500 AND NOT promocion,FALLIDO,total=4116.00 autorizado=True activo=True lineas=1
+PET-T010,PET-O010,validar cliente activo AND detalle no vacio AND autorizacion,EXITOSO,total=6860.00 autorizado=True activo=True lineas=2
+PET-B010,PET-O010,VIP AND total >=1500 AND NOT promocion,FALLIDO,total=6860.00 autorizado=True activo=True lineas=2
+PET-T011,PET-O011,validar cliente activo AND detalle no vacio AND autorizacion,EXITOSO,total=6528.00 autorizado=True activo=True lineas=3
+PET-B011,PET-O011,VIP AND total >=1500 AND NOT promocion,FALLIDO,total=6528.00 autorizado=True activo=True lineas=3
+PET-T012,PET-O012,validar cliente activo AND detalle no vacio AND autorizacion,EXITOSO,total=1182.00 autorizado=True activo=True lineas=1
+PET-B012,PET-O012,VIP AND total >=1500 AND NOT promocion,FALLIDO,total=1182.00 autorizado=True activo=True lineas=1
+PET-T013,PET-O013,validar cliente activo AND detalle no vacio AND autorizacion,FALLIDO,total=0.00 autorizado=True activo=True lineas=0
+PET-B013,PET-O013,VIP AND total >=1500 AND NOT promocion,FALLIDO,total=0.00 autorizado=True activo=True lineas=0
+PET-T014,PET-O014,validar cliente activo AND detalle no vacio AND autorizacion,EXITOSO,total=8894.00 autorizado=True activo=True lineas=3
+PET-B014,PET-O014,VIP AND total >=1500 AND NOT promocion,FALLIDO,total=8894.00 autorizado=True activo=True lineas=3
+PET-T015,PET-O015,validar cliente activo AND detalle no vacio AND autorizacion,EXITOSO,total=1230.00 autorizado=True activo=True lineas=1
+PET-B015,PET-O015,VIP AND total >=1500 AND NOT promocion,FALLIDO,total=1230.00 autorizado=True activo=True lineas=1
+PET-T016,PET-O016,validar cliente activo AND detalle no vacio AND autorizacion,FALLIDO,total=8280.00 autorizado=False activo=True lineas=2
+PET-B016,PET-O016,VIP AND total >=1500 AND NOT promocion,FALLIDO,total=8280.00 autorizado=False activo=True lineas=2
+PET-T017,PET-O017,validar cliente activo AND detalle no vacio AND autorizacion,EXITOSO,total=8278.00 autorizado=True activo=True lineas=3
+PET-B017,PET-O017,VIP AND total >=1500 AND NOT promocion,FALLIDO,total=8278.00 autorizado=True activo=True lineas=3
+PET-T018,PET-O018,validar cliente activo AND detalle no vacio AND autorizacion,EXITOSO,total=7476.00 autorizado=True activo=True lineas=1
+PET-B018,PET-O018,VIP AND total >=1500 AND NOT promocion,FALLIDO,total=7476.00 autorizado=True activo=True lineas=1
+PET-T019,PET-O019,validar cliente activo AND detalle no vacio AND autorizacion,EXITOSO,total=2696.00 autorizado=True activo=True lineas=2
+PET-B019,PET-O019,VIP AND total >=1500 AND NOT promocion,FALLIDO,total=2696.00 autorizado=True activo=True lineas=2
+PET-T020,PET-O020,validar cliente activo AND detalle no vacio AND autorizacion,EXITOSO,total=11780.00 autorizado=True activo=True lineas=3
+PET-B020,PET-O020,VIP AND total >=1500 AND NOT promocion,FALLIDO,total=11780.00 autorizado=True activo=True lineas=3
+PET-T021,PET-O021,validar cliente activo AND detalle no vacio AND autorizacion,EXITOSO,total=3264.00 autorizado=True activo=True lineas=1
+PET-B021,PET-O021,VIP AND total >=1500 AND NOT promocion,FALLIDO,total=3264.00 autorizado=True activo=True lineas=1
+PET-T022,PET-O022,validar cliente activo AND detalle no vacio AND autorizacion,EXITOSO,total=6860.00 autorizado=True activo=True lineas=2
+PET-B022,PET-O022,VIP AND total >=1500 AND NOT promocion,FALLIDO,total=6860.00 autorizado=True activo=True lineas=2
+PET-T023,PET-O023,validar cliente activo AND detalle no vacio AND autorizacion,EXITOSO,total=7664.00 autorizado=True activo=True lineas=3
+PET-B023,PET-O023,VIP AND total >=1500 AND NOT promocion,EXITOSO,total=7664.00 autorizado=True activo=True lineas=3
+PET-T024,PET-O024,validar cliente activo AND detalle no vacio AND autorizacion,FALLIDO,total=3454.00 autorizado=False activo=True lineas=1
+PET-B024,PET-O024,VIP AND total >=1500 AND NOT promocion,FALLIDO,total=3454.00 autorizado=False activo=True lineas=1
+PET-T025,PET-O025,validar cliente activo AND detalle no vacio AND autorizacion,EXITOSO,total=5060.00 autorizado=True activo=True lineas=2
+PET-B025,PET-O025,VIP AND total >=1500 AND NOT promocion,FALLIDO,total=5060.00 autorizado=True activo=True lineas=2
+PET-T026,PET-O026,validar cliente activo AND detalle no vacio AND autorizacion,EXITOSO,total=6906.00 autorizado=True activo=True lineas=3
+PET-B026,PET-O026,VIP AND total >=1500 AND NOT promocion,FALLIDO,total=6906.00 autorizado=True activo=True lineas=3
+PET-T027,PET-O027,validar cliente activo AND detalle no vacio AND autorizacion,EXITOSO,total=946.00 autorizado=True activo=True lineas=1
+PET-B027,PET-O027,VIP AND total >=1500 AND NOT promocion,FALLIDO,total=946.00 autorizado=True activo=True lineas=1
+PET-T028,PET-O028,validar cliente activo AND detalle no vacio AND autorizacion,EXITOSO,total=6860.00 autorizado=True activo=True lineas=2
+PET-B028,PET-O028,VIP AND total >=1500 AND NOT promocion,EXITOSO,total=6860.00 autorizado=True activo=True lineas=2
+PET-T029,PET-O029,validar cliente activo AND detalle no vacio AND autorizacion,EXITOSO,total=11686.00 autorizado=True activo=True lineas=3
+PET-B029,PET-O029,VIP AND total >=1500 AND NOT promocion,FALLIDO,total=11686.00 autorizado=True activo=True lineas=3
+PET-T030,PET-O030,validar cliente activo AND detalle no vacio AND autorizacion,EXITOSO,total=6340.00 autorizado=True activo=True lineas=1
+PET-B030,PET-O030,VIP AND total >=1500 AND NOT promocion,FALLIDO,total=6340.00 autorizado=True activo=True lineas=1
+PET-T031,PET-O031,validar cliente activo AND detalle no vacio AND autorizacion,EXITOSO,total=3264.00 autorizado=True activo=True lineas=2
+PET-B031,PET-O031,VIP AND total >=1500 AND NOT promocion,FALLIDO,total=3264.00 autorizado=True activo=True lineas=2
+PET-T032,PET-O032,validar cliente activo AND detalle no vacio AND autorizacion,FALLIDO,total=9224.00 autorizado=False activo=True lineas=3
+PET-B032,PET-O032,VIP AND total >=1500 AND NOT promocion,FALLIDO,total=9224.00 autorizado=False activo=True lineas=3
+PET-T033,PET-O033,validar cliente activo AND detalle no vacio AND autorizacion,EXITOSO,total=2412.00 autorizado=True activo=True lineas=1
+PET-B033,PET-O033,VIP AND total >=1500 AND NOT promocion,EXITOSO,total=2412.00 autorizado=True activo=True lineas=1
+PET-T034,PET-O034,validar cliente activo AND detalle no vacio AND autorizacion,EXITOSO,total=5440.00 autorizado=True activo=True lineas=2
+PET-B034,PET-O034,VIP AND total >=1500 AND NOT promocion,FALLIDO,total=5440.00 autorizado=True activo=True lineas=2
+PET-T035,PET-O035,validar cliente activo AND detalle no vacio AND autorizacion,EXITOSO,total=5960.00 autorizado=True activo=True lineas=3
+PET-B035,PET-O035,VIP AND total >=1500 AND NOT promocion,FALLIDO,total=5960.00 autorizado=True activo=True lineas=3
+PET-T036,PET-O036,validar cliente activo AND detalle no vacio AND autorizacion,EXITOSO,total=2886.00 autorizado=True activo=True lineas=1
+PET-B036,PET-O036,VIP AND total >=1500 AND NOT promocion,FALLIDO,total=2886.00 autorizado=True activo=True lineas=1
+PET-T037,PET-O037,validar cliente activo AND detalle no vacio AND autorizacion,EXITOSO,total=7332.00 autorizado=True activo=True lineas=2
+PET-B037,PET-O037,VIP AND total >=1500 AND NOT promocion,FALLIDO,total=7332.00 autorizado=True activo=True lineas=2
+PET-T038,PET-O038,validar cliente activo AND detalle no vacio AND autorizacion,EXITOSO,total=10598.00 autorizado=True activo=True lineas=3
+PET-B038,PET-O038,VIP AND total >=1500 AND NOT promocion,EXITOSO,total=10598.00 autorizado=True activo=True lineas=3
+PET-T039,PET-O039,validar cliente activo AND detalle no vacio AND autorizacion,FALLIDO,total=0.00 autorizado=True activo=False lineas=0
+PET-B039,PET-O039,VIP AND total >=1500 AND NOT promocion,FALLIDO,total=0.00 autorizado=True activo=False lineas=0
+PET-T040,PET-O040,validar cliente activo AND detalle no vacio AND autorizacion,FALLIDO,total=5440.00 autorizado=False activo=False lineas=2
+PET-B040,PET-O040,VIP AND total >=1500 AND NOT promocion,FALLIDO,total=5440.00 autorizado=False activo=False lineas=2
+PET-T041,PET-O041,validar cliente activo AND detalle no vacio AND autorizacion,FALLIDO,total=10834.00 autorizado=True activo=False lineas=3
+PET-B041,PET-O041,VIP AND total >=1500 AND NOT promocion,FALLIDO,total=10834.00 autorizado=True activo=False lineas=3
+PET-T042,PET-O042,validar cliente activo AND detalle no vacio AND autorizacion,FALLIDO,total=5204.00 autorizado=True activo=False lineas=1
+PET-B042,PET-O042,VIP AND total >=1500 AND NOT promocion,FALLIDO,total=5204.00 autorizado=True activo=False lineas=1
+PET-T043,PET-O043,validar cliente activo AND detalle no vacio AND autorizacion,FALLIDO,total=5252.00 autorizado=True activo=False lineas=2
+PET-B043,PET-O043,VIP AND total >=1500 AND NOT promocion,EXITOSO,total=5252.00 autorizado=True activo=False lineas=2
+PET-T044,PET-O044,validar cliente activo AND detalle no vacio AND autorizacion,EXITOSO,total=9508.00 autorizado=True activo=True lineas=3
+PET-B044,PET-O044,VIP AND total >=1500 AND NOT promocion,FALLIDO,total=9508.00 autorizado=True activo=True lineas=3
+PET-T045,PET-O045,validar cliente activo AND detalle no vacio AND autorizacion,EXITOSO,total=1560.00 autorizado=True activo=True lineas=1
+PET-B045,PET-O045,VIP AND total >=1500 AND NOT promocion,FALLIDO,total=1560.00 autorizado=True activo=True lineas=1
+PET-T046,PET-O046,validar cliente activo AND detalle no vacio AND autorizacion,EXITOSO,total=4020.00 autorizado=True activo=True lineas=2
+PET-B046,PET-O046,VIP AND total >=1500 AND NOT promocion,FALLIDO,total=4020.00 autorizado=True activo=True lineas=2
+PET-T047,PET-O047,validar cliente activo AND detalle no vacio AND autorizacion,EXITOSO,total=8516.00 autorizado=True activo=True lineas=3
+PET-B047,PET-O047,VIP AND total >=1500 AND NOT promocion,FALLIDO,total=8516.00 autorizado=True activo=True lineas=3
+PET-T048,PET-O048,validar cliente activo AND detalle no vacio AND autorizacion,FALLIDO,total=2318.00 autorizado=False activo=True lineas=1
+PET-B048,PET-O048,VIP AND total >=1500 AND NOT promocion,EXITOSO,total=2318.00 autorizado=False activo=True lineas=1
+PET-T049,PET-O049,validar cliente activo AND detalle no vacio AND autorizacion,EXITOSO,total=11024.00 autorizado=True activo=True lineas=2
+PET-B049,PET-O049,VIP AND total >=1500 AND NOT promocion,FALLIDO,total=11024.00 autorizado=True activo=True lineas=2
+PET-T050,PET-O050,validar cliente activo AND detalle no vacio AND autorizacion,EXITOSO,total=8610.00 autorizado=True activo=True lineas=3
+PET-B050,PET-O050,VIP AND total >=1500 AND NOT promocion,FALLIDO,total=8610.00 autorizado=True activo=True lineas=3
+PET-T051,PET-O051,validar cliente activo AND detalle no vacio AND autorizacion,EXITOSO,total=1798.00 autorizado=True activo=True lineas=1
+PET-B051,PET-O051,VIP AND total >=1500 AND NOT promocion,FALLIDO,total=1798.00 autorizado=True activo=True lineas=1
+PET-T052,PET-O052,validar cliente activo AND detalle no vacio AND autorizacion,EXITOSO,total=4020.00 autorizado=True activo=True lineas=2
+PET-B052,PET-O052,VIP AND total >=1500 AND NOT promocion,FALLIDO,total=4020.00 autorizado=True activo=True lineas=2
+PET-T053,PET-O053,validar cliente activo AND detalle no vacio AND autorizacion,EXITOSO,total=8562.00 autorizado=True activo=True lineas=3
+PET-B053,PET-O053,VIP AND total >=1500 AND NOT promocion,EXITOSO,total=8562.00 autorizado=True activo=True lineas=3
+PET-T054,PET-O054,validar cliente activo AND detalle no vacio AND autorizacion,EXITOSO,total=4068.00 autorizado=True activo=True lineas=1
+PET-B054,PET-O054,VIP AND total >=1500 AND NOT promocion,FALLIDO,total=4068.00 autorizado=True activo=True lineas=1
+PET-T055,PET-O055,validar cliente activo AND detalle no vacio AND autorizacion,EXITOSO,total=4400.00 autorizado=True activo=True lineas=2
+PET-B055,PET-O055,VIP AND total >=1500 AND NOT promocion,FALLIDO,total=4400.00 autorizado=True activo=True lineas=2
+PET-T056,PET-O056,validar cliente activo AND detalle no vacio AND autorizacion,FALLIDO,total=11212.00 autorizado=False activo=True lineas=3
+PET-B056,PET-O056,VIP AND total >=1500 AND NOT promocion,FALLIDO,total=11212.00 autorizado=False activo=True lineas=3
+PET-T057,PET-O057,validar cliente activo AND detalle no vacio AND autorizacion,EXITOSO,total=4968.00 autorizado=True activo=True lineas=1
+PET-B057,PET-O057,VIP AND total >=1500 AND NOT promocion,FALLIDO,total=4968.00 autorizado=True activo=True lineas=1
+PET-T058,PET-O058,validar cliente activo AND detalle no vacio AND autorizacion,EXITOSO,total=8280.00 autorizado=True activo=True lineas=2
+PET-B058,PET-O058,VIP AND total >=1500 AND NOT promocion,EXITOSO,total=8280.00 autorizado=True activo=True lineas=2
+PET-T059,PET-O059,validar cliente activo AND detalle no vacio AND autorizacion,EXITOSO,total=6812.00 autorizado=True activo=True lineas=3
+PET-B059,PET-O059,VIP AND total >=1500 AND NOT promocion,FALLIDO,total=6812.00 autorizado=True activo=True lineas=3
+PET-T060,PET-O060,validar cliente activo AND detalle no vacio AND autorizacion,EXITOSO,total=1750.00 autorizado=True activo=True lineas=1
+PET-B060,PET-O060,VIP AND total >=1500 AND NOT promocion,FALLIDO,total=1750.00 autorizado=True activo=True lineas=1

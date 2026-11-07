@@ -1,0 +1,480 @@
+openapi: 3.1.0
+info:
+  title: PetMarket Order & Logistics API
+  description: API DDD del PIA PetMarket (FIME UANL). RN-01 a RN-21.
+  version: 1.0.0
+paths:
+  /health:
+    get:
+      tags:
+      - Infraestructura
+      summary: Health
+      operationId: health_health_get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                type: object
+                title: Response Health Health Get
+  /v1/checkout/reserve:
+    post:
+      tags:
+      - Carrito & Checkout
+      summary: Reserve Stock
+      operationId: reserve_stock_v1_checkout_reserve_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ReserveRequest'
+        required: true
+      responses:
+        '201':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReserveResponse'
+        '400':
+          description: '>50 unidades por SKU o datos inválidos'
+        '409':
+          description: Stock insuficiente
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /v1/payments/process:
+    post:
+      tags:
+      - Pagos & Transacciones
+      summary: Process Payment
+      operationId: process_payment_v1_payments_process_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PaymentRequest'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaymentResponse'
+        '402':
+          description: Pago rechazado (incrementa reintento)
+        '409':
+          description: Stock agotado en revalidación (RN-05)
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /v1/orders:
+    post:
+      tags:
+      - Pedidos
+      summary: Create Order
+      operationId: create_order_v1_orders_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateOrderRequest'
+        required: true
+      responses:
+        '201':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateOrderResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /v1/orders/{order_id}:
+    get:
+      tags:
+      - Pedidos
+      summary: Get Order
+      operationId: get_order_v1_orders__order_id__get
+      parameters:
+      - name: order_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Order Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrderDetailsDTO'
+        '404':
+          description: No encontrado
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /v1/orders/{order_id}/cancel:
+    post:
+      tags:
+      - Cancelaciones
+      summary: Cancel Order
+      operationId: cancel_order_v1_orders__order_id__cancel_post
+      parameters:
+      - name: order_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Order Id
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CancelRequest'
+      responses:
+        '200':
+          description: Cancelación procesada
+          content:
+            application/json:
+              schema: {}
+        '403':
+          description: No autorizada (RN-11, RN-12, RN-13)
+        '404':
+          description: No encontrado
+        '409':
+          description: El estatus actual no permite cancelar
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /v1/returns:
+    post:
+      tags:
+      - Entregas & Devoluciones
+      summary: Create Return
+      operationId: create_return_v1_returns_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ReturnRequest'
+        required: true
+      responses:
+        '201':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReturnResponse'
+        '400':
+          description: Pedido no entregado, SKU ajeno o falta evidencia
+        '403':
+          description: Agente no puede aprobar excepción
+        '404':
+          description: Pedido no encontrado
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+components:
+  schemas:
+    CancelRequest:
+      properties:
+        role:
+          type: string
+          title: Role
+        reason:
+          type: string
+          title: Reason
+          default: ''
+        destinoProducto:
+          type: string
+          title: Destinoproducto
+          default: ''
+      type: object
+      required:
+      - role
+      title: CancelRequest
+    CreateOrderRequest:
+      properties:
+        customerId:
+          type: string
+          title: Customerid
+        items:
+          items:
+            $ref: '#/components/schemas/ItemIn'
+          type: array
+          title: Items
+      type: object
+      required:
+      - customerId
+      - items
+      title: CreateOrderRequest
+    CreateOrderResponse:
+      properties:
+        orderId:
+          type: string
+          title: Orderid
+        status:
+          type: string
+          title: Status
+        total:
+          type: number
+          title: Total
+      type: object
+      required:
+      - orderId
+      - status
+      - total
+      title: CreateOrderResponse
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    ItemIn:
+      properties:
+        sku:
+          type: string
+          title: Sku
+        quantity:
+          type: integer
+          exclusiveMinimum: 0.0
+          title: Quantity
+        unitPrice:
+          type: number
+          exclusiveMinimum: 0.0
+          title: Unitprice
+      type: object
+      required:
+      - sku
+      - quantity
+      - unitPrice
+      title: ItemIn
+    OrderDetailsDTO:
+      properties:
+        orderId:
+          type: string
+          title: Orderid
+        customerId:
+          type: string
+          title: Customerid
+        status:
+          type: string
+          title: Status
+        totalAmount:
+          type: number
+          title: Totalamount
+        isSplit:
+          type: boolean
+          title: Issplit
+        subOrders:
+          items:
+            $ref: '#/components/schemas/SubOrderDTO'
+          type: array
+          title: Suborders
+      type: object
+      required:
+      - orderId
+      - customerId
+      - status
+      - totalAmount
+      - isSplit
+      - subOrders
+      title: OrderDetailsDTO
+    PaymentRequest:
+      properties:
+        reservationId:
+          type: string
+          title: Reservationid
+        paymentToken:
+          type: string
+          title: Paymenttoken
+        amount:
+          type: number
+          title: Amount
+      type: object
+      required:
+      - reservationId
+      - paymentToken
+      - amount
+      title: PaymentRequest
+    PaymentResponse:
+      properties:
+        orderId:
+          type: string
+          title: Orderid
+        status:
+          type: string
+          title: Status
+        transactionId:
+          type: string
+          title: Transactionid
+        attemptsRemaining:
+          type: integer
+          title: Attemptsremaining
+      type: object
+      required:
+      - orderId
+      - status
+      - transactionId
+      - attemptsRemaining
+      title: PaymentResponse
+    ReserveRequest:
+      properties:
+        customerId:
+          type: string
+          title: Customerid
+        items:
+          items:
+            $ref: '#/components/schemas/ItemIn'
+          type: array
+          title: Items
+      type: object
+      required:
+      - customerId
+      - items
+      title: ReserveRequest
+    ReserveResponse:
+      properties:
+        reservationId:
+          type: string
+          title: Reservationid
+        expiresAt:
+          type: string
+          format: date-time
+          title: Expiresat
+        reservedItems:
+          items:
+            $ref: '#/components/schemas/ItemIn'
+          type: array
+          title: Reserveditems
+      type: object
+      required:
+      - reservationId
+      - expiresAt
+      - reservedItems
+      title: ReserveResponse
+    ReturnRequest:
+      properties:
+        orderId:
+          type: string
+          title: Orderid
+        sku:
+          type: string
+          title: Sku
+        requestedByRole:
+          type: string
+          title: Requestedbyrole
+        condition:
+          type: string
+          title: Condition
+        evidencePhotoUrl:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Evidencephotourl
+      type: object
+      required:
+      - orderId
+      - sku
+      - requestedByRole
+      - condition
+      title: ReturnRequest
+    ReturnResponse:
+      properties:
+        returnId:
+          type: string
+          title: Returnid
+        status:
+          type: string
+          title: Status
+        returnLabelUrl:
+          type: string
+          title: Returnlabelurl
+          default: ''
+      type: object
+      required:
+      - returnId
+      - status
+      title: ReturnResponse
+    SubOrderDTO:
+      properties:
+        folio:
+          type: string
+          title: Folio
+        warehouseId:
+          type: string
+          title: Warehouseid
+        status:
+          type: string
+          title: Status
+        trackingNumber:
+          type: string
+          title: Trackingnumber
+        items:
+          items:
+            items: {}
+            type: array
+          type: array
+          title: Items
+      type: object
+      required:
+      - folio
+      - warehouseId
+      - status
+      - trackingNumber
+      - items
+      title: SubOrderDTO
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+        input:
+          title: Input
+        ctx:
+          type: object
+          title: Context
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError

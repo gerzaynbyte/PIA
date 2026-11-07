@@ -1,0 +1,21 @@
+caso_id,operacion_id,accion,estado_final,evento,excepcion
+PET-S001,PET-O001,completar,CREADO,,Precondiciones no satisfechas (puede_procesarse=False)
+PET-S002,PET-O002,cancelar,CREADO,,Precondiciones no satisfechas (puede_procesarse=False)
+PET-S003,PET-O003,repetir_aprobacion,CREADO,,Precondiciones no satisfechas (puede_procesarse=False)
+PET-S004,PET-O004,saltar_estado,CREADO,,Transición inválida: CREADO → ENTREGADO
+PET-S005,PET-O005,aprobar,PAGADO,OperacionTransicionada:PAGADO,
+PET-S006,PET-O006,completar,ENTREGADO,OperacionTransicionada:PAGADO;OperacionTransicionada:SURTIDO;OperacionTransicionada:ENTREGADO,
+PET-S007,PET-O007,cancelar,CANCELADO,OperacionTransicionada:CANCELADO,
+PET-S008,PET-O008,repetir_aprobacion,CREADO,,Precondiciones no satisfechas (puede_procesarse=False)
+PET-S009,PET-O009,saltar_estado,CREADO,,Transición inválida: CREADO → ENTREGADO
+PET-S010,PET-O010,aprobar,PAGADO,OperacionTransicionada:PAGADO,
+PET-S011,PET-O011,completar,ENTREGADO,OperacionTransicionada:PAGADO;OperacionTransicionada:SURTIDO;OperacionTransicionada:ENTREGADO,
+PET-S012,PET-O012,cancelar,CANCELADO,OperacionTransicionada:CANCELADO,
+PET-S013,PET-O013,repetir_aprobacion,CREADO,,Precondiciones no satisfechas (puede_procesarse=False)
+PET-S014,PET-O014,saltar_estado,CREADO,,Transición inválida: CREADO → ENTREGADO
+PET-S015,PET-O015,aprobar,PAGADO,OperacionTransicionada:PAGADO,
+PET-S016,PET-O016,completar,CREADO,,Precondiciones no satisfechas (puede_procesarse=False)
+PET-S017,PET-O017,cancelar,CANCELADO,OperacionTransicionada:CANCELADO,
+PET-S018,PET-O018,repetir_aprobacion,PAGADO,OperacionTransicionada:PAGADO,Transición inválida: PAGADO → PAGADO
+PET-S019,PET-O019,saltar_estado,CREADO,,Transición inválida: CREADO → ENTREGADO
+PET-S020,PET-O020,aprobar,PAGADO,OperacionTransicionada:PAGADO,

@@ -1,0 +1,40 @@
+name: CI PetMarket
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        python-version: [ "3.11", "3.12" ]
+
+    steps:
+    - name: Checkout repositorio
+      uses: actions/checkout@v4
+
+    - name: Configurar Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v5
+      with:
+        python-version: ${{ matrix.python-version }}
+        cache: 'pip'
+
+    - name: Instalar dependencias
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+
+    - name: Ejecutar pruebas unitarias con gate de cobertura 80%
+      run: |
+        pytest -m "not integration" --cov=src --cov-report=term-missing \
+              --cov-fail-under=80
+
+    # security-defined se omite a propósito: la autenticación JWT es trabajo futuro (el rol
+    # viaja en el cuerpo de la petición). Quitar esta exclusión al implementar seguridad.
+    - name: Validar especificación OpenAPI
+      run: npx --yes @redocly/cli lint docs/api/openapi.yaml --skip-rule=no-empty-servers --skip-rule=operation-4xx-response --skip-rule=security-defined
