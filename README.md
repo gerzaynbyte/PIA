@@ -4,7 +4,8 @@ Sistema transaccional (pedidos, inventario, logística multialmacén) bajo
 arquitectura limpia y DDD. Reglas de negocio RN-01 a RN-21 materializadas
 como código verificable.
 
-- **Repositorio:** `<URL del repositorio>` · **Despliegue:** `https://<app>.up.railway.app`
+- **Repositorio:** `https://github.com/gerzaynbyte/PIA.git` 
+	· **Despliegue:** `https://<app>.up.railway.app`
 - **Swagger en producción:** `https://<app>.up.railway.app/docs`
 
 ## Requisitos
