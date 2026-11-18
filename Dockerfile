@@ -13,6 +13,7 @@ COPY tools/ tools/
 COPY data/ data/
 COPY docs/api/ docs/api/
 COPY tests/ tests/
+COPY templates/ ./templates/
 
 EXPOSE 3000
 CMD ["uvicorn", "src.main:app", "--host", "0.0.0.0", "--port", "3000"]

@@ -20,7 +20,7 @@ services:
       retries: 12
       start_period: 15s
 
-  # ---------- APLICACIÓN (API REST) ----------
+  # ---------- APLICACION (API REST) ----------
   api:
     build: .
     container_name: petmarket_api
@@ -46,19 +46,13 @@ services:
       timeout: 5s
       retries: 5
 
-  # ---------- TESTS (unitarios + integración + runner CSV) ----------
+  # ---------- TESTS (unitarios + integracion + runner CSV) ----------
   tests:
     build: .
     container_name: petmarket_tests
     profiles: ["tests"]        # no arranca con `up` normal (evita reproducir la API en cada demo)
     command: >
-      bash -c "
-        python tools/wait_for_db.py &&
-        python -m tools.ejecutar_casos data/ resultados/ &&
-        pytest tests/ --cov=src --cov-report=term-missing
-                      --cov-report=xml:cov/coverage.xml
-                      --cov-fail-under=80
-        "
+      bash -c "python tools/wait_for_db.py && python -m tools.ejecutar_casos data/ resultados/ && pytest tests/ --cov=src --cov-report=term-missing --cov-report=xml:cov/coverage.xml --cov-fail-under=80"
     environment:
       APP_ENV: test
       DB_HOST: mysql_db

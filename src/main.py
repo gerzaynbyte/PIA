@@ -3,7 +3,10 @@ from contextlib import asynccontextmanager
 
 from dotenv import load_dotenv
 from fastapi import FastAPI
+from fastapi.responses import RedirectResponse
+from pathlib import Path
 
+from fastapi.responses import HTMLResponse
 from src.api.order_controller import router
 from src.composition_root import order_application_service
 
@@ -25,10 +28,20 @@ app = FastAPI(
     lifespan=lifespan,
 )
 
+BASE_DIR = Path(__file__).resolve().parent.parent
+TEMPLATES_DIR = BASE_DIR / "templates"
+
+@app.get("/portal", include_in_schema=False)
+async def portal() -> HTMLResponse:
+    return HTMLResponse((TEMPLATES_DIR / "portal.html").read_text(encoding="utf-8"))
 
 @app.get("/health", tags=["Infraestructura"])
 async def health() -> dict:
     return {"status": "ok"}
+
+@app.get("/", include_in_schema=False)
+async def root():
+    return RedirectResponse(url="/docs")
 
 
 app.include_router(router)

@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>PetMarket — Portal de Pedidos</title>
+<style>
+    body { font-family: system-ui, sans-serif; background:#f6f5ff; margin:0; }
+    header { background:#6d4aff; color:#fff; padding:20px 32px; }
+    .grid { display:flex; flex-wrap:wrap; gap:20px; justify-content:center; padding:20px; }
+    .card { background:#fff; border-radius:14px; width:340px; padding:20px;
+            box-shadow:0 2px 10px rgba(0,0,0,.08); }
+    h2 { margin:0 0 4px; font-size:18px; color:#3a2e7e; }
+    .hint { font-size:12px; color:#888; margin-bottom:8px; }
+    label { display:block; margin:10px 0 4px; font-weight:600; color:#333; font-size:14px; }
+    input, select { width:100%; box-sizing:border-box; padding:9px;
+                    border:1px solid #ccc; border-radius:8px; }
+    input[readonly] { background:#eee9ff; color:#3a2e7e; font-weight:600; }
+    button { margin-top:14px; width:100%; padding:11px; border:none; border-radius:8px;
+            background:#6d4aff; color:#fff; font-size:15px; cursor:pointer; }
+    button:hover { background:#5a3ae6; }
+    .resultado { margin-top:12px; padding:12px; border-radius:8px; display:none; font-size:14px; }
+    .ok { background:#e6ffe6; color:#1a6b1a; }
+    .error { background:#ffe6e6; color:#a11; }
+    .aviso { background:#fff6df; color:#8a6100; border:1px solid #eedc9a; }
+    .spinner { color:#6d4aff; }
+    code { background:#f0edff; padding:2px 6px; border-radius:6px; word-break:break-all; }
+</style>
+</head>
+<body>
+<header><h1>🐾 PetMarket — Portal de Pedidos</h1>
+<p style="margin:4px 0 0; opacity:.85;">Pedidos, pagos, cancelaciones y devoluciones</p></header>
+
+<div class="grid">
+
+<!-- ============ 1. NUEVO PEDIDO ============ -->
+<div class="card">
+    <h2>🛒 Nuevo pedido</h2>
+    <p class="hint">Máximo 50 unidades por producto (RN-07).</p>
+    <label>ID del cliente</label>
+    <input id="customerId" placeholder="cliente-001">
+    <label>Producto</label>
+    <select id="skuNuevo" onchange="autocompletarPrecio('skuNuevo','precioNuevo','totalNuevo','cantidadNuevo')"></select>
+    <label>Cantidad</label>
+    <input id="cantidadNuevo" type="number" min="1" max="50" value="1"
+            oninput="mostrarTotal('totalNuevo','cantidadNuevo','precioNuevo','avisoNuevo')">
+    <label>Precio unitario (MXN)</label>
+    <input id="precioNuevo" type="number" min="0.01" step="0.01" value="520.00">
+    <div id="totalNuevo" style="margin-top:8px; font-weight:600; color:#3a2e7e;"></div>
+    <button onclick="crearPedido()">Crear pedido</button>
+    <div id="resPedido" class="resultado"></div>
+</div>
+
+<!-- ============ 2. CHECKOUT (reserva + pago) ============ -->
+<div class="card">
+    <h2>💳 Pagar pedido</h2>
+    <p class="hint">Reservamos el stock y procesamos el pago automáticamente.</p>
+    <label>ID del cliente</label>
+    <input id="customerIdPago" placeholder="cliente-001">
+    <label>Producto</label>
+    <select id="skuPago" onchange="autocompletarPrecio('skuPago','precioPago','totalPago','cantidadPago')"></select>
+    <label>Cantidad</label>
+    <input id="cantidadPago" type="number" min="1" max="50" value="1"
+            oninput="mostrarTotal('totalPago','cantidadPago','precioPago','avisoPago')">
+    <label>Precio unitario (MXN)</label>
+    <input id="precioPago" type="number" min="0.01" step="0.01" value="520.00">
+    <div id="totalPago" style="margin-top:8px; font-weight:600; color:#3a2e7e;"></div>
+    <div id="avisoPago" class="resultado aviso"></div>
+    <button onclick="pagar()">Reservar y pagar</button>
+    <div id="resPago" class="resultado"></div>
+</div>
+
+<!-- ============ 3. CONSULTAR PEDIDO ============ -->
+<div class="card">
+    <h2>🔍 Consultar pedido</h2>
+    <p class="hint">Consulta el estado actual con el folio.</p>
+    <label>Folio del pedido</label>
+    <input id="folioConsulta" placeholder="pega aquí el folio">
+    <button onclick="consultar()">Consultar</button>
+    <div id="resConsulta" class="resultado"></div>
+</div>
+
+<!-- ============ 4. CANCELAR PEDIDO ============ -->
+    <div class="card">
+    <h2>❌ Cancelar pedido</h2>
+    <p class="hint">El cliente puede cancelar hasta 2 h después del pago (RN-11). En tránsito solo un supervisor (RN-13).</p>
+    <label>Folio del pedido</label>
+    <input id="folioCancel" placeholder="pega aquí el folio">
+    <label>Rol</label>
+    <select id="rolCancel">
+        <option value="CLIENTE">Cliente</option>
+        <option value="AGENTE">Agente de atención</option>
+        <option value="SUPERVISOR">Supervisor</option>
+    </select>
+    <label>Motivo</label>
+    <input id="motivoCancel" placeholder="p. ej. me equivoqué">
+    <button onclick="cancelar()">Cancelar pedido</button>
+    <div id="resCancel" class="resultado"></div>
+</div>
+
+<!-- ============ 5. DEVOLUCIÓN ============ -->
+<div class="card">
+    <h2>↩️ Devolución</h2>
+    <p class="hint">Solo pedidos entregados. Fuera de la ventana estándar, requiere supervisor y evidencia (RN-21).</p>
+    <label>Folio del pedido</label>
+    <input id="folioDev" placeholder="pega aquí el folio">
+    <label>Producto</label>
+    <select id="skuDev"></select>
+    <label>Solicita</label>
+    <select id="rolDev">
+        <option value="CLIENTE">Cliente</option>
+        <option value="AGENTE_ATENCION">Agente de atención</option>
+        <option value="SUPERVISOR_ATENCION">Supervisor de atención</option>
+    </select>
+    <label>Estado del producto</label>
+    <select id="condDev">
+        <option value="NUEVO_SIN_USAR">Nuevo, sin usar</option>
+        <option value="DANADO">Dañado</option>
+    </select>
+    <label>Foto de evidencia (URL, opcional)</label>
+    <input id="evidenciaDev" placeholder="https://…">
+    <button onclick="devolver()">Solicitar devolución</button>
+    <div id="resDev" class="resultado"></div>
+</div>
+
+</div>
+
+<script>
+/* ================= CATÁLOGO (catalogo.csv, excluye PET-P011 deshabilitado) ================= */
+const CATALOGO = [
+    { sku:'PET-P001', nombre:'Alimento 01',  precio:520.00  },
+    { sku:'PET-P002', nombre:'Correa 02',    precio:591.00  },
+    { sku:'PET-P003', nombre:'Juguete 03',   precio:662.00  },
+    { sku:'PET-P004', nombre:'Cama 04',      precio:733.00  },
+    { sku:'PET-P005', nombre:'Alimento 05',  precio:804.00  },
+    { sku:'PET-P006', nombre:'Correa 06',    precio:875.00  },
+    { sku:'PET-P007', nombre:'Juguete 07',   precio:946.00  },
+    { sku:'PET-P008', nombre:'Cama 08',      precio:1017.00 },
+    { sku:'PET-P009', nombre:'Alimento 09',  precio:1088.00 },
+    { sku:'PET-P010', nombre:'Correa 10',    precio:1159.00 },
+    { sku:'PET-P012', nombre:'Cama 12',      precio:1301.00 },
+    { sku:'PET-P013', nombre:'Alimento 13',  precio:1372.00 },
+    { sku:'PET-P014', nombre:'Correa 14',    precio:1443.00 },
+    { sku:'PET-P015', nombre:'Juguete 15',   precio:1514.00 },
+    { sku:'PET-P016', nombre:'Cama 16',      precio:1585.00 },
+    { sku:'PET-P017', nombre:'Alimento 17',  precio:1656.00 },
+    { sku:'PET-P018', nombre:'Correa 18',    precio:1727.00 },
+    { sku:'PET-P019', nombre:'Juguete 19',   precio:1798.00 },
+    { sku:'PET-P020', nombre:'Cama 20',      precio:1869.00 }
+];
+const UMBRAL_ANTIFRAUDE = 15000;   // RN-09
+
+function poblarSelect(id) {
+    const sel = document.getElementById(id);
+    sel.innerHTML = CATALOGO.map((p, i) =>
+        `<option value="${p.sku}" data-precio="${p.precio}">${p.nombre} — $${p.precio.toFixed(2)} (${p.sku})</option>`
+    ).join('');
+}
+['skuNuevo','skuPago','skuDev'].forEach(poblarSelect);
+
+/* Autocompleta el precio del catálogo y lo congela; recalcula el total */
+    function autocompletarPrecio(selId, precioId, totalId, cantId) {
+    const sel = document.getElementById(selId);
+    const opcion = sel.options[sel.selectedIndex];
+    document.getElementById(precioId).value = opcion.dataset.precio;
+    mostrarTotal(totalId, cantId, precioId, null);
+}
+
+/* Muestra el total y, si supera el umbral, el aviso RN-09 */
+function mostrarTotal(totalId, cantId, precioId, avisoId) {
+    const total = parseFloat(document.getElementById(cantId).value || 0) *
+                    parseFloat(document.getElementById(precioId).value || 0);
+    const div = document.getElementById(totalId);
+    div.textContent = 'Total: $' + (total || 0).toFixed(2);
+    if (avisoId) {
+        const aviso = document.getElementById(avisoId);
+        aviso.style.display = total > UMBRAL_ANTIFRAUDE ? 'block' : 'none';
+        aviso.textContent = '🔎 Este total supera $15,000: por seguridad, el pago pasará a ' +
+        'revisión antifraude y quedará pendiente de aprobación (RN-09).';
+    }
+}
+/* Totales iniciales */
+['Nuevo','Pago'].forEach(suf =>
+    mostrarTotal('total' + suf, 'cantidad' + suf, 'precio' + suf,
+                suf === 'Pago' ? 'avisoPago' : null));
+
+/* ================= utilidades HTTP ================= */
+async function llamar(url, opciones) {
+    const resp = await fetch(url, opciones);
+    let data = {};
+    try { data = await resp.json(); } catch (e) { /* cuerpo vacío */ }
+    return { ok: resp.ok, status: resp.status, data };
+}
+
+function enviar(url, metodo, cuerpo, panelId, alExito) {
+    const panel = document.getElementById(panelId);
+    panel.style.display = 'block';
+    panel.className = 'resultado spinner';
+    panel.textContent = '⏳ Procesando…';
+    llamar(url, {
+        method: metodo,
+        headers: {'Content-Type': 'application/json'},
+        body: cuerpo ? JSON.stringify(cuerpo) : undefined
+    }).then(r => {
+        if (r.ok) { panel.className = 'resultado ok'; panel.innerHTML = alExito(r.data); }
+        else { panel.className = 'resultado error'; panel.textContent = '⚠️ ' + traducir(r); }
+    }).catch(() => {
+        panel.className = 'resultado error';
+        panel.textContent = '⚠️ No se pudo conectar con el servidor.';
+    });
+}
+
+/* Traduce códigos HTTP y reglas de negocio a lenguaje humano */
+function traducir(r) {
+    const d = String(r.data.detail || r.data || '');
+    if (r.status === 404) return 'No encontramos ese folio. Verifícalo.';
+    if (d.includes('RN-07')) return 'Excediste el máximo de 50 unidades por producto.';
+    if (d.includes('RN-08')) return 'El pago falló 3 veces: el pedido fue cancelado. Intenta con uno nuevo.';
+    if (d.includes('RN-05')) return 'La reserva expiró antes de pagar. Vuelve a iniciar el checkout.';
+    if (d.includes('RN-09') || d.toUpperCase().includes('ANTIFRAUDE'))
+        return 'Por el monto, el pago pasó a revisión de seguridad. Te avisaremos.';
+    if (d.includes('RN-11')) return 'Como cliente solo puedes cancelar dentro de las 2 horas posteriores al pago.';
+    if (d.includes('RN-13')) return 'Un pedido en tránsito solo puede cancelarlo un supervisor.';
+    if (d.includes('RN-12')) return 'Un agente necesita indicar motivo y destino del producto para cancelar.';
+    if (d.includes('RN-20')) return 'Solo pueden devolverse pedidos ya entregados.';
+    if (d.includes('RN-21')) return 'Fuera de la ventana de devolución: requiere supervisor y foto de evidencia.';
+    if (r.status === 403) return 'Tu rol no tiene permiso para esta operación.';
+    if (r.status === 409) return 'El estado actual del pedido no permite esta operación.';
+    if (r.status === 402) return 'El pago fue rechazado. ' + d;
+    return d || 'Ocurrió un error inesperado.';
+}
+
+const ESTADOS_AMIGABLES = {
+    PENDIENTE_PAGO: 'Pendiente de pago',
+    PAGO_CONFIRMADO: 'Pago confirmado ✅',
+    EN_REVISION_ANTIFRAUDE: 'En revisión de seguridad 🔎',
+    EN_PREPARACION: 'En preparación 📦',
+    EMPACADO: 'Empacado',
+    EN_TRANSITO: 'En tránsito 🚚',
+    ENTREGADO: 'Entregado 🎉',
+    CANCELADO: 'Cancelado',
+    CANCELADO_PAGO_EXPIRADO: 'Cancelado por pago fallido/expirado',
+    CANCELADO_EXCEPCIONAL: 'Cancelado (excepción de supervisor)',
+    DEVOLUCION_INMEDIATA_RECHAZO: 'Devolución inmediata por rechazo en sitio',
+    EN_PROCESO_DEVOLUCION: 'Devolución en proceso ↩️',
+    FINALIZADO_EXITOSO: 'Finalizado con éxito 🏁'
+};
+const estado = s => ESTADOS_AMIGABLES[s] || s || '';
+
+/* ================= 1. Nuevo pedido ================= */
+function crearPedido() {
+    enviar('/v1/orders', 'POST', {
+        customerId: val('customerId'),
+        items: [{ sku: val('skuNuevo'), quantity: num('cantidadNuevo'), unitPrice: num('precioNuevo') }]
+    }, 'resPedido', d =>
+        '✅ Pedido creado.<br><b>Folio:</b> <code>' + d.orderId + '</code><br>' +
+        '<b>Estado:</b> ' + estado(d.status) +
+        '<br><b>Total:</b> $' + Number(d.total).toFixed(2));
+}
+
+/* ================= 2. Reservar y pagar (encadenado, ocultando la reserva) ================= */
+function pagar() {
+    const item = { sku: val('skuPago'), quantity: num('cantidadPago'), unitPrice: num('precioPago') };
+    const monto = +(item.quantity * item.unitPrice).toFixed(2);
+    const panel = document.getElementById('resPago');
+    panel.style.display = 'block'; panel.className = 'resultado spinner';
+    panel.textContent = '⏳ Reservando stock…';
+    llamar('/v1/checkout/reserve', { method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({ customerId: val('customerIdPago'), items:[item] })
+    }).then(r1 => {
+        if (!r1.ok) { panel.className='resultado error'; panel.textContent='⚠️ '+traducir(r1); return; }
+        panel.textContent = '⏳ Procesando pago…';
+        return llamar('/v1/payments/process', { method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({ reservationId: r1.data.reservationId,
+                                paymentToken: 'tok-demo', amount: monto })
+        }).then(r2 => {
+        if (r2.ok) {
+            panel.className = 'resultado ok';
+            panel.innerHTML = '✅ ¡Pago confirmado!<br><b>Folio:</b> <code>' + r2.data.orderId +
+            '</code><br><b>Estado:</b> ' + estado(r2.data.status) +
+            '<br><b>Total pagado:</b> $' + monto.toFixed(2);
+        } else {
+            panel.className = 'resultado error';
+            panel.textContent = '⚠️ ' + traducir(r2);
+        }
+        });
+    }).catch(() => {
+        panel.className = 'resultado error';
+        panel.textContent = '⚠️ No se pudo conectar con el servidor.';
+    });
+}
+
+/* ================= 3. Consultar ================= */
+function consultar() {
+    enviar('/v1/orders/' + encodeURIComponent(val('folioConsulta')), 'GET', null, 'resConsulta', d =>
+        '<b>Estado:</b> ' + estado(d.status) +
+        '<br><b>Cliente:</b> ' + d.customerId +
+        '<br><b>Total:</b> $' + Number(d.totalAmount).toFixed(2) +
+        (d.isSplit ? '<br>📦 <b>Enviado en varios paquetes</b> (' + d.subOrders.length + ')' : ''));
+}
+
+/* ================= 4. Cancelar ================= */
+function cancelar() {
+    enviar('/v1/orders/' + encodeURIComponent(val('folioCancel')) + '/cancel', 'POST', {
+        role: val('rolCancel'), reason: val('motivoCancel')
+    }, 'resCancel', d =>
+        '✅ Cancelación procesada.<br><b>Estado:</b> ' +
+        estado((d.data && d.data.status) || 'CANCELADO'));
+}
+
+/* ================= 5. Devolución ================= */
+function devolver() {
+    const cuerpo = { orderId: val('folioDev'), sku: val('skuDev'),
+                    requestedByRole: val('rolDev'), condition: val('condDev') };
+    const foto = val('evidenciaDev');
+    if (foto) cuerpo.evidencePhotoUrl = foto;
+    enviar('/v1/returns', 'POST', cuerpo, 'resDev', d =>
+        '✅ Devolución aprobada.<br><b>Estado:</b> ' + estado(d.status) +
+        (d.returnLabelUrl ? '<br>📄 <a href="' + d.returnLabelUrl + '">Etiqueta de retorno</a>' : ''));
+}
+
+function val(id) { return document.getElementById(id).value.trim(); }
+function num(id) { return parseFloat(document.getElementById(id).value); }
+</script>
+</body>
+</html>
