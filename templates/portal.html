@@ -27,7 +27,7 @@
 </style>
 </head>
 <body>
-<header><h1>🐾 PetMarket — Portal de Pedidos</h1>
+<header><h1> PetMarket — Portal de Pedidos</h1>
 <p style="margin:4px 0 0; opacity:.85;">Pedidos, pagos, cancelaciones y devoluciones</p></header>
 
 <div class="grid">
@@ -216,9 +216,8 @@ function traducir(r) {
     if (d.includes('RN-07')) return 'Excediste el máximo de 50 unidades por producto.';
     if (d.includes('RN-08')) return 'El pago falló 3 veces: el pedido fue cancelado. Intenta con uno nuevo.';
     if (d.includes('RN-05')) return 'La reserva expiró antes de pagar. Vuelve a iniciar el checkout.';
-    if (d.includes('RN-09') || d.toUpperCase().includes('ANTIFRAUDE'))
-        return 'Por el monto, el pago pasó a revisión de seguridad. Te avisaremos.';
-    if (d.includes('RN-11')) return 'Como cliente solo puedes cancelar dentro de las 2 horas posteriores al pago.';
+    if (d.includes('RN-09') || d.toUpperCase().includes('ANTIFRAUDE')) return 'Por el monto, el pago pasó a revisión de seguridad. Te avisaremos.';
+    if (d.includes('RN-11')) return d;
     if (d.includes('RN-13')) return 'Un pedido en tránsito solo puede cancelarlo un supervisor.';
     if (d.includes('RN-12')) return 'Un agente necesita indicar motivo y destino del producto para cancelar.';
     if (d.includes('RN-20')) return 'Solo pueden devolverse pedidos ya entregados.';

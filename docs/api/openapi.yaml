@@ -2,7 +2,7 @@ openapi: 3.1.0
 info:
   title: PetMarket Order & Logistics API
   description: API DDD del PIA PetMarket (FIME UANL). RN-01 a RN-21.
-  version: 1.0.0
+  version: 1.1.0
 paths:
   /health:
     get:
@@ -69,6 +69,8 @@ paths:
                 $ref: '#/components/schemas/PaymentResponse'
         '402':
           description: Pago rechazado (incrementa reintento)
+        '404':
+          description: 'Reserva inexistente '
         '409':
           description: Stock agotado en revalidación (RN-05)
         '422':
@@ -198,8 +200,151 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/HTTPValidationError'
+  /v1/deliveries/intentos:
+    post:
+      tags:
+      - Entregas & Devoluciones
+      summary: Registrar Intento
+      operationId: registrar_intento_v1_deliveries_intentos_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/IntentoRequest'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccionResponse'
+        '404':
+          description: Pedido o sub-envío no encontrado
+        '409':
+          description: Estado actual no permite el intento (p. ej. tercer intento,
+            RN-17)
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /v1/deliveries/contacto:
+    post:
+      tags:
+      - Entregas & Devoluciones
+      summary: Contactar Cliente
+      operationId: contactar_cliente_v1_deliveries_contacto_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FolioRequest'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccionResponse'
+        '404':
+          description: Entrega no encontrada
+        '409':
+          description: Solo procede tras el retorno a almacén (RN-17)
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /v1/deliveries/respuesta:
+    post:
+      tags:
+      - Entregas & Devoluciones
+      summary: Registrar Respuesta
+      operationId: registrar_respuesta_v1_deliveries_respuesta_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FolioRequest'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccionResponse'
+        '404':
+          description: Entrega no encontrada
+        '409':
+          description: 'Respuesta tardía: RN-18 exige reembolso, no reprogramación'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /v1/deliveries/reembolso-inactividad:
+    post:
+      tags:
+      - Entregas & Devoluciones
+      summary: Reembolso Por Inactividad
+      operationId: reembolso_por_inactividad_v1_deliveries_reembolso_inactividad_post
+      parameters:
+      - name: fecha_actual
+        in: query
+        required: false
+        schema:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Fecha Actual
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FolioRequest'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccionResponse'
+        '404':
+          description: Entrega no encontrada
+        '409':
+          description: Plazo de 5 días hábiles aún vigente (RN-18)
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
 components:
   schemas:
+    AccionResponse:
+      properties:
+        folio:
+          type: string
+          title: Folio
+        deliveryStatus:
+          type: string
+          title: Deliverystatus
+        orderStatus:
+          type: string
+          title: Orderstatus
+      type: object
+      required:
+      - folio
+      - deliveryStatus
+      - orderStatus
+      title: AccionResponse
     CancelRequest:
       properties:
         role:
@@ -249,6 +394,19 @@ components:
       - status
       - total
       title: CreateOrderResponse
+    FolioRequest:
+      properties:
+        orderId:
+          type: string
+          title: Orderid
+        folio:
+          type: string
+          title: Folio
+      type: object
+      required:
+      - orderId
+      - folio
+      title: FolioRequest
     HTTPValidationError:
       properties:
         detail:
@@ -258,6 +416,31 @@ components:
           title: Detail
       type: object
       title: HTTPValidationError
+    IntentoRequest:
+      properties:
+        orderId:
+          type: string
+          title: Orderid
+        folio:
+          type: string
+          title: Folio
+        exitoso:
+          type: boolean
+          title: Exitoso
+        motivoFalla:
+          type: string
+          title: Motivofalla
+          default: ''
+        trackingNumber:
+          type: string
+          title: Trackingnumber
+          default: ''
+      type: object
+      required:
+      - orderId
+      - folio
+      - exitoso
+      title: IntentoRequest
     ItemIn:
       properties:
         sku:

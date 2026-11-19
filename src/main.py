@@ -3,10 +3,10 @@ from contextlib import asynccontextmanager
 
 from dotenv import load_dotenv
 from fastapi import FastAPI
-from fastapi.responses import RedirectResponse
+from fastapi.responses import RedirectResponse, HTMLResponse
 from pathlib import Path
 
-from fastapi.responses import HTMLResponse
+from src.api.delivery_controller import router as delivery_router
 from src.api.order_controller import router
 from src.composition_root import order_application_service
 
@@ -15,7 +15,7 @@ load_dotenv()
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    # Se construye el servicio (y, con DB_HOST, el pool y el esquema) al arrancar:
+    # Se construyen los servicios (y, con DB_HOST, el pool y el esquema) al arrancar:
     # falla rápido si la BD no responde y evita carreras en las primeras peticiones.
     order_application_service()
     yield
@@ -23,7 +23,7 @@ async def lifespan(app: FastAPI):
 
 app = FastAPI(
     title="PetMarket Order & Logistics API",
-    version="1.0.0",
+    version="1.1.0",
     description="API DDD del PIA PetMarket (FIME UANL). RN-01 a RN-21.",
     lifespan=lifespan,
 )
@@ -45,3 +45,4 @@ async def root():
 
 
 app.include_router(router)
+app.include_router(delivery_router)

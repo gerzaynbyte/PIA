@@ -42,9 +42,9 @@ class TransitionValidation:
 
 
 VENTANA_AUTOCANCELACION_HORAS = 2                      # RN-11
-ESTADOS_AUTOCANCELABLES = (OrderStatus.PENDIENTE_PAGO,  # sin cobro: nada que reembolsar
-                           OrderStatus.PAGO_CONFIRMADO,
-                           OrderStatus.EN_PREPARACION)
+ESTADOS_AUTOCANCELABLES = (OrderStatus.PENDIENTE_PAGO,  # sin cobro: cancelación libre, sin ventana
+                            OrderStatus.PAGO_CONFIRMADO,
+                            OrderStatus.EN_PREPARACION)
 ESTADOS_CON_VENTANA = (OrderStatus.PAGO_CONFIRMADO, OrderStatus.EN_PREPARACION)
 
 
@@ -53,8 +53,8 @@ def can_transition(current: OrderStatus, next_status: OrderStatus) -> bool:
 
 
 def validate_transition_with_rules(current_status: OrderStatus, target_status: OrderStatus,
-                                   role: SystemRole,
-                                   payment_confirmed_at: datetime) -> TransitionValidation:
+                                    role: SystemRole,
+                                    payment_confirmed_at: datetime) -> TransitionValidation:
     """Valida una transición contra la matriz y las reglas por rol y tiempo.
 
     `payment_confirmed_at` es la referencia de la ventana RN-11 (confirmación
@@ -76,14 +76,16 @@ def validate_transition_with_rules(current_status: OrderStatus, target_status: O
     if rol == Rol.CLIENTE and target_status == OrderStatus.CANCELADO:
         if current_status not in ESTADOS_AUTOCANCELABLES:
             return TransitionValidation(
-                False, "RN-11: la autocancelación solo aplica en PAGO_CONFIRMADO o "
-                       "EN_PREPARACION; contacte a Atención al Cliente.")
+                False, "RN-11: como cliente solo puedes cancelar antes del despacho "
+                        "(PENDIENTE_PAGO, PAGO_CONFIRMADO o EN_PREPARACION); en estados "
+                        "posteriores contacte a Atención al Cliente.")
         if current_status in ESTADOS_CON_VENTANA:
             if payment_confirmed_at.tzinfo is None:
                 payment_confirmed_at = payment_confirmed_at.replace(tzinfo=timezone.utc)
             horas = (datetime.now(timezone.utc) - payment_confirmed_at).total_seconds() / 3600
             if horas > VENTANA_AUTOCANCELACION_HORAS:
                 return TransitionValidation(
-                    False, "RN-11: la ventana de autocancelación libre de 2 horas ha expirado.")
+                    False, "RN-11: la ventana de autocancelación libre de 2 horas "
+                            "posteriores al pago ha expirado; contacte a Atención al Cliente.")
 
     return TransitionValidation(True)

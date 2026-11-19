@@ -7,13 +7,14 @@ import pytest
 from src.application.order_application_service import OrderApplicationService
 from src.domain.value_objects.order_status import OrderStatus
 from src.infrastructure.in_memory_order_repository import InMemoryOrderRepository
+from src.infrastructure.in_memory_inventory_repository import InMemoryInventoryRepository
 
 ITEMS = [("ALIM-DOG-01", 2, Decimal("100.00"))]
 
 
 @pytest.fixture
 def svc():
-    return OrderApplicationService(InMemoryOrderRepository())
+    return OrderApplicationService(InMemoryOrderRepository(), InMemoryInventoryRepository({"ALIM-DOG-01": 100}))
 
 
 async def _pedido(svc, items=ITEMS):

@@ -52,6 +52,10 @@ class Delivery(Entity[Identifier, DeliveryProps]):
         return self._props.tracking_number
 
     @property
+    def sub_order_id(self) -> str:
+        return self._props.sub_order_id
+
+    @property
     def intentos(self) -> List[IntentoEntrega]:
         return list(self._props.intentos)
 

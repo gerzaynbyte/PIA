@@ -33,3 +33,10 @@ CREATE TABLE IF NOT EXISTS sub_orders (
     items         JSON        NOT NULL,
     FOREIGN KEY (order_id) REFERENCES orders(order_id) ON DELETE CASCADE
 ) ENGINE=InnoDB;
+CREATE TABLE IF NOT EXISTS inventory (
+    sku            VARCHAR(30) PRIMARY KEY,
+    physical_stock INT NOT NULL DEFAULT 0,
+    reserved_stock INT NOT NULL DEFAULT 0,
+    updated_at     TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+                   ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB;

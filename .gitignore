@@ -1,7 +1,10 @@
-.env
 __pycache__/
 *.pyc
 .pytest_cache/
 .coverage
 cov/
 .venv/
+.env
+.env.*
+!.env.example
+resultados/

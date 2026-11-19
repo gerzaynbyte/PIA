@@ -7,7 +7,8 @@ from src.domain.value_objects.order_status import OrderStatus
 from src.main import app
 
 BODY = {"customerId": "cliente-1",
-        "items": [{"sku": "ALIM-DOG-01", "quantity": 2, "unitPrice": 100.0}]}
+            "items": [{"sku": "PET-P001", "quantity": 2, "unitPrice": 520.0}]}
+# y en los 3 tests que pagan vía reserva, amount: 1040.0 en vez de 200.0
 
 
 @pytest.fixture
@@ -25,7 +26,7 @@ def test_health(client):
 
 def test_crear_y_consultar_pedido(client):
     r = client.post("/v1/orders", json=BODY)
-    assert r.status_code == 201 and r.json()["status"] == "PENDIENTE_PAGO" and r.json()["total"] == 200.0
+    assert r.status_code == 201 and r.json()["status"] == "PENDIENTE_PAGO" and r.json()["total"] == 1040.0
     assert len(r.json()["orderId"]) == 36                 # UUID, no "Identifier(value=...)"
     g = client.get(f"/v1/orders/{r.json()['orderId']}")
     assert g.status_code == 200 and g.json()["customerId"] == "cliente-1"
@@ -45,7 +46,7 @@ def test_checkout_reserva_y_pago_sobreviven_entre_peticiones(client):
     """Regresión: antes cada petición creaba un servicio nuevo y perdía la reserva."""
     r = client.post("/v1/checkout/reserve", json=BODY)
     assert r.status_code == 201 and "reservationId" in r.json()
-    pago = {"reservationId": r.json()["reservationId"], "paymentToken": "tok", "amount": 200.0}
+    pago = {"reservationId": r.json()["reservationId"], "paymentToken": "tok", "amount": 1040.0}
     p = client.post("/v1/payments/process", json=pago)
     assert p.status_code == 200 and p.json()["status"] == "PAGO_CONFIRMADO"
     assert client.get(f"/v1/orders/{p.json()['orderId']}").json()["status"] == "PAGO_CONFIRMADO"
@@ -58,13 +59,13 @@ def test_reserva_rechaza_datos_invalidos(client):
 
 def test_pago_rn08_402_y_cancelacion_al_tercer_intento(client):
     rid = client.post("/v1/checkout/reserve", json=BODY).json()["reservationId"]
-    pago = {"reservationId": rid, "paymentToken": "t", "amount": 1.0}
+    pago = {"reservationId": rid, "paymentToken": "t", "amount": 1.0} # monto incorrecto a proposito RN-08
     for _ in range(2):
         r = client.post("/v1/payments/process", json=pago)
         assert r.status_code == 402 and "Intentos restantes" in r.json()["detail"]
     ultimo = client.post("/v1/payments/process", json=pago)
     assert ultimo.status_code == 402 and "RN-08" in ultimo.json()["detail"]
-    assert client.post("/v1/payments/process", json=pago).status_code == 402   # reserva ya cerrada
+    assert client.post("/v1/payments/process", json=pago).status_code == 404   # reserva ya no existe
 
 
 def test_pago_con_reserva_expirada_409(client):
@@ -72,7 +73,7 @@ def test_pago_con_reserva_expirada_409(client):
     from datetime import datetime, timedelta, timezone
     order_application_service()._reservas[rid]["expires"] = datetime.now(timezone.utc) - timedelta(minutes=1)
     r = client.post("/v1/payments/process",
-                    json={"reservationId": rid, "paymentToken": "t", "amount": 200.0})
+                    json={"reservationId": rid, "paymentToken": "t", "amount": 1040.0})
     assert r.status_code == 409 and "RN-05" in r.json()["detail"]
 
 
@@ -91,16 +92,15 @@ def test_cancelacion_rn11_rn13_por_http(client):
     import asyncio
     o = asyncio.run(svc._order_repo.find_by_id(oid))
     o._set_status(OrderStatus.EN_TRANSITO)
-    r = client.post(f"/v1/orders/{oid}/cancel", json={"role": "AGENTE", "reason": "x",
-                                                      "destinoProducto": "INVENTARIO"})
+    r = client.post(f"/v1/orders/{oid}/cancel", json={"role": "AGENTE", "reason": "x", "destinoProducto": "INVENTARIO"})
     assert r.status_code == 403 and "RN-13" in r.json()["detail"]
     assert client.post(f"/v1/orders/{oid}/cancel",
-                       json={"role": "SUPERVISOR", "reason": "excepción"}).status_code == 200
+                        json={"role": "SUPERVISOR", "reason": "excepción"}).status_code == 200
 
 
 def test_devoluciones_por_http(client):
     oid = client.post("/v1/orders", json=BODY).json()["orderId"]
-    body = {"orderId": oid, "sku": "ALIM-DOG-01", "requestedByRole": "CLIENTE",
+    body = {"orderId": oid, "sku": "PET-P001", "requestedByRole": "CLIENTE",
             "condition": "NUEVO_SIN_USAR"}
     assert client.post("/v1/returns", json=body).status_code == 400          # no entregado
     assert client.post("/v1/returns", json={**body, "orderId": "zzz"}).status_code == 404

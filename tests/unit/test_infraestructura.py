@@ -25,13 +25,58 @@ DATOS = Path(__file__).parents[2] / "data"
 class FakeDB:
     def __init__(self, columnas=("order_id",)):
         self.orders, self.items, self.subs, self.sentencias = {}, [], [], []
+        self.inventory = []          # filas de la tabla inventory (punto 2)
         self.columnas = list(columnas)
         self.commits = 0
-
 
 class FakeCursor:
     def __init__(self, db, dictionary=False):
         self.db, self.dictionary, self._rows = db, dictionary, []
+
+    def execute(self, sql, params=()):
+        db = self.db
+        db.sentencias.append(" ".join(sql.split()))
+        s = db.sentencias[-1]
+        if s.startswith("INSERT INTO orders"):
+            cols = ["order_id", "customer_id", "status", "total_amount", "created_at",
+                    "updated_at", "is_split", "payment_attempts", "warehouse_id",
+                    "payment_confirmed_at", "delivered_at"]
+            db.orders[params[0]] = dict(zip(cols, params))
+        elif s.startswith("DELETE FROM order_items"):
+            db.items = [i for i in db.items if i["order_id"] != params[0]]
+        elif s.startswith("DELETE FROM sub_orders"):
+            db.subs = [i for i in db.subs if i["order_id"] != params[0]]
+        elif s.startswith("SELECT * FROM orders"):
+            self._rows = [db.orders[params[0]]] if params[0] in db.orders else []
+        elif s.startswith("SELECT * FROM order_items"):
+            self._rows = [i for i in db.items if i["order_id"] == params[0]]
+        elif s.startswith("SELECT * FROM sub_orders"):
+            self._rows = [i for i in db.subs if i["order_id"] == params[0]]
+        elif s.startswith("SELECT COUNT(*) FROM inventory"):       # punto 2
+            self._rows = [(len(db.inventory),)]
+        elif "information_schema" in s:
+            self._rows = [(c,) for c in db.columnas]
+
+    def executemany(self, sql, seq):
+        s = " ".join(sql.split())
+        self.db.sentencias.append(s)
+        for p in seq:
+            if "INTO order_items" in s:
+                self.db.items.append(dict(zip(["order_id", "sku", "quantity", "unit_price"], p)))
+            elif "INTO inventory" in s:                            # punto 2
+                # sembrar_si_vacia envía (sku, stock); reserved_stock es literal 0 en el SQL
+                self.db.inventory.append(dict(zip(["sku", "physical_stock"], p)))
+            else:
+                self.db.subs.append(dict(zip(["folio", "order_id", "warehouse_id", "status", "guia_rastreo", "items"], p)))
+
+    def fetchone(self):
+        return self._rows[0] if self._rows else None
+
+    def fetchall(self):
+        return list(self._rows)
+
+    def close(self):
+        pass
 
     def execute(self, sql, params=()):
         db = self.db
@@ -156,7 +201,7 @@ def test_apply_schema_crea_tablas_y_migra_columnas_faltantes():
     pool = FakePool(FakeDB(columnas=("order_id", "customer_id")))
     apply_schema(pool)
     s = pool.db.sentencias
-    assert sum(x.startswith("CREATE TABLE") for x in s) == 3
+    assert sum(x.startswith("CREATE TABLE") for x in s) == 4
     alters = [x for x in s if x.startswith("ALTER TABLE")]
     assert len(alters) == 3 and any("warehouse_id" in a for a in alters)
 

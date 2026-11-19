@@ -6,6 +6,11 @@ from typing import Optional
 from fastapi import APIRouter, Depends, HTTPException, status
 from pydantic import BaseModel, Field
 
+from src.api.http_errors import (DEFECTO_CANCELACION, DEFECTO_CONSULTA,
+                                 DEFECTO_DEVOLUCION, DEFECTO_PAGO,
+                                 DEFECTO_RESERVA, REGLAS_CANCELACION,
+                                 REGLAS_DEVOLUCION, REGLAS_PAGO,
+                                 REGLAS_RESERVA, estatus_http)
 from src.application.order_application_service import OrderApplicationService
 from src.composition_root import order_application_service
 
@@ -95,8 +100,8 @@ async def reserve_stock(body: ReserveRequest,
                                     [(i.sku, i.quantity, Decimal(str(i.unitPrice)))
                                     for i in body.items])
     if r.is_failure:
-        code = 409 if "insuficiente" in (r.error or "").lower() else 400
-        raise HTTPException(code, r.error)
+        raise HTTPException(estatus_http(r.error, REGLAS_RESERVA, DEFECTO_RESERVA),
+                            r.error)
     return r.value
 
 
@@ -104,15 +109,14 @@ async def reserve_stock(body: ReserveRequest,
 @router.post("/payments/process", response_model=PaymentResponse,
             tags=["Pagos & Transacciones"],
             responses={402: {"description": "Pago rechazado (incrementa reintento)"},
+                       404: {"description": "Reserva inexistente "},
                         409: {"description": "Stock agotado en revalidación (RN-05)"}})
 async def process_payment(body: PaymentRequest,
                         service: OrderApplicationService = Depends(svc)):
     r = await service.process_payment(body.reservationId,
                                     Decimal(str(body.amount)))
     if r.is_failure:
-        msg = r.error or ""
-        code = 409 if "RN-05" in msg else 402
-        raise HTTPException(code, msg)
+        raise HTTPException(estatus_http(r.error, REGLAS_PAGO, DEFECTO_PAGO), r.error)
     return r.value
 
 
@@ -125,7 +129,7 @@ async def create_order(body: CreateOrderRequest,
         body.customerId, [(i.sku, i.quantity, Decimal(str(i.unitPrice)))
                             for i in body.items])
     if r.is_failure:
-        raise HTTPException(400, r.error)
+        raise HTTPException(400, r.error)   # todos los fallos de alta son 400
     return r.value
 
 
@@ -136,7 +140,7 @@ async def get_order(order_id: str,
                     service: OrderApplicationService = Depends(svc)):
     r = await service.get_order_details(order_id)
     if r.is_failure:
-        raise HTTPException(404, r.error)
+        raise HTTPException(DEFECTO_CONSULTA, r.error)
     return r.value
 
 
@@ -151,12 +155,8 @@ async def cancel_order(order_id: str, body: CancelRequest,
     r = await service.cancel_order(order_id, body.role, body.reason,
                                     body.destinoProducto)
     if r.is_failure:
-        msg = r.error or ""
-        if "no encontrado" in msg:
-            raise HTTPException(404, msg)
-        if "Transición no permitida" in msg:
-            raise HTTPException(409, msg)
-        raise HTTPException(403, msg)
+        raise HTTPException(estatus_http(r.error, REGLAS_CANCELACION,
+                                        DEFECTO_CANCELACION), r.error)
     return {"message": "Pedido cancelado correctamente", "data": r.value}
 
 
@@ -171,7 +171,6 @@ async def create_return(body: ReturnRequest,
     r = await service.create_return(body.orderId, body.sku, body.requestedByRole,
                                     body.condition, body.evidencePhotoUrl)
     if r.is_failure:
-        msg = r.error or ""
-        code = 404 if "no encontrado" in msg else 403 if "escal" in msg else 400
-        raise HTTPException(code, msg)
+        raise HTTPException(estatus_http(r.error, REGLAS_DEVOLUCION,
+                                        DEFECTO_DEVOLUCION), r.error)
     return r.value
