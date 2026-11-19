@@ -5,7 +5,6 @@ multialmacén) bajo arquitectura limpia y DDD. Las reglas de negocio
 RN-01 a RN-21 del BRD están materializadas como código verificable.
 
 - **Repositorio:** https://github.com/gerzaynbyte/PIA.git
-- **Despliegue:** _pendiente de sustituir con la URL real de Railway_
 - **Swagger en producción:** `<URL>/docs` · **Portal de demostración:** `<URL>/portal`
 - **Versión de la API:** 1.1.0
 
